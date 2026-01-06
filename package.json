@@ -1,0 +1,22 @@
+{
+  "name": "youtube_summarizer",
+  "version": "1.0.0",
+  "description": "This is a simple web app that takes a YouTube video URL, retrieves the transcript and generates a summary using the Gemini API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "googleapis": "^168.0.0",
+    "openai": "^6.15.0",
+    "pg": "^8.16.3",
+    "youtube-transcript": "^1.2.1"
+  }
+}
