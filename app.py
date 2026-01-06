@@ -64,11 +64,11 @@ def extract_video_id_from_url(url):
 def summarize_transcript(transcript):
     """Generates a summary of a video transcript using the Gemini API."""
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         prompt = f"""
         You are a helpful assistant that summarizes YouTube videos for users.
         Summarize the following YouTube video transcript in a clear and structured way.
-        Transcript:
+        Transcrip^t:
         \"\"\"
         {transcript}
         \"\"\"
@@ -89,7 +89,7 @@ def get_transcript_with_proxy(video_id):
     
     if not proxy_username or not proxy_password:
         print("No proxy credentials found, trying direct connection...")
-        return YouTubeTranscriptApi.get_transcript(video_id)
+        return YouTubeTranscriptApi().fetch(video_id).to_raw_data()
     
     try:
         print(f"Attempting to get transcript for video {video_id} using proxy...")
@@ -105,10 +105,8 @@ def get_transcript_with_proxy(video_id):
         print(f"Proxy dict: {proxy_config.to_requests_dict()}")
         
         # Get transcript with proxy
-        transcript_list = YouTubeTranscriptApi.get_transcript(
-            video_id, 
-            proxies=proxy_config.to_requests_dict()
-        )
+        api = YouTubeTranscriptApi(proxy_config=proxy_config)
+        transcript_list = api.fetch(video_id).to_raw_data()
         
         print(f"Successfully retrieved transcript with proxy")
         return transcript_list
@@ -119,7 +117,7 @@ def get_transcript_with_proxy(video_id):
         
         # Fallback to direct connection
         try:
-            return YouTubeTranscriptApi.get_transcript(video_id)
+            return YouTubeTranscriptApi().fetch(video_id).to_raw_data()
         except Exception as direct_error:
             print(f"Direct connection also failed: {direct_error}")
             raise direct_error

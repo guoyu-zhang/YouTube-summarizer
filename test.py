@@ -9,7 +9,7 @@ proxy_config = WebshareProxyConfig(
 
 try:
     api = YouTubeTranscriptApi(proxy_config=proxy_config)
-    transcript = api.get_transcript("ShYKkPPhOoc")  # Use video ID
+    transcript = api.fetch("ShYKkPPhOoc")  # Use video ID
     print("Transcript snippet:", transcript[:2])
 except Exception as e:
     print("Error fetching transcript:", e)
